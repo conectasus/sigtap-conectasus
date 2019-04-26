@@ -7,17 +7,19 @@ from layout import FieldLayout, Layout
 
 import const
 
+import pandas as pd
+
 
 def processDateType(value, data_type):
     if data_type == 'NUMBER':
         return ''
 
 def gerar_json(layout):
-    print('tamanho do layout: ' + str(len(layout.list_field)))
+    #print('tamanho do layout: ' + str(len(layout.list_field)))
     arquivo = layout.filename.replace('_layout', '')
     try:
-        arq_lay = open(arquivo, 'r')
-        print(arq_lay.name)
+        arq_lay = open(arquivo, 'r', encoding="ISO-8859-1")
+        #print(arq_lay.name)
 
         str_json = str('[')
 
@@ -29,8 +31,9 @@ def gerar_json(layout):
                 start = int(layout.list_field[i].field_pos_start)-1
                 end = int(layout.list_field[i].field_pos_end)
                 # value = processDateType(line[start:end], layout.list_field[i].field_type)
-                value = layout.list_field[i].process(line[start:end])
-
+                value = layout.list_field[i].process(line[start:end].replace('"', "'"))
+                #print('\n----------------')
+                #print(value)
                 str_json += '\"' + name + '\": ' + value
 
                 if i < len(layout.list_field) - 1:
@@ -41,9 +44,13 @@ def gerar_json(layout):
                 str_json += ','
         str_json += ']'
 
-        a = open(arquivo.replace('.txt', '') + '.json', 'w')
+        a = open(arquivo.replace('.txt', '') + '.json', 'w', encoding="ISO-8859-1")
         a.write(str_json)
-        print(str_json)
+
+        dataframe = pd.read_json(str_json)
+        dataframe.to_csv(arquivo.replace('.txt', '') + '.csv', index=False)
+
+        #print(str_json)
 
     except IOError as err:
         print('File not found: ' + str(err))

@@ -1,11 +1,7 @@
-# sia-gen
-SIA-GEN
+# Converter arquivos da Tabela SIGTAP .txt para .json e .csv
+Derivado do projeto https://github.com/julianlfs/sigtap-gen
 
-Monitora e baixa o arquivo zip da última competência das tabelas do SIGTAP (http://sigtap.datasus.gov.br/tabela-unificada/app/download.jsp) (em breve)
+### Como executar
+python        arg.py       arquivo.zip      pasta_para_extrair/
 
-Extrai e gera os arquvos json a partir do layout de cada tabela.
-
-
-
-
-
+Obs: Pasta para extrair deve terminar com /
