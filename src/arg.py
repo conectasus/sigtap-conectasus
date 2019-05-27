@@ -47,7 +47,7 @@ def gerar_json(layout):
         a = open(arquivo.replace('.txt', '') + '.json', 'w', encoding="ISO-8859-1")
         a.write(str_json)
 
-        dataframe = pd.read_json(str_json)
+        dataframe = pd.read_json(str_json, dtype=False)
         dataframe.to_csv(arquivo.replace('.txt', '') + '.csv', index=False)
 
         #print(str_json)
